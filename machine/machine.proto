@@ -1,22 +1,12 @@
 syntax = "proto3";
 package machine;
-<<<<<<< HEAD
- 
-
-service Machine {
-    rpc Execute(stream Instruction) returns (stream Result) {}
-=======
 
 option go_package = "machine";
 
 
 service Machine {
     rpc Execute(InstructionSet) returns (Result) {}
-<<<<<<< HEAD
->>>>>>> 61858383af3c9893303e6c1d8c303613ddff9832
-=======
     rpc ServerStreamingExecute (InstructionSet) returns (stream Result){}
->>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
 }
 
 message Instruction {
@@ -24,11 +14,6 @@ message Instruction {
     int32 operand = 2;
 }
 
-<<<<<<< HEAD
-message Result {
-    float output = 1;
-}
-=======
 message InstructionSet {
     repeated Instruction instructions = 1;
 }
@@ -36,4 +21,3 @@ message InstructionSet {
 message Result {
     float output = 1;
 }
->>>>>>> 61858383af3c9893303e6c1d8c303613ddff9832
