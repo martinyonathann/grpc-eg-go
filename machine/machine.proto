@@ -6,6 +6,7 @@ option go_package = "machine";
 
 service Machine {
     rpc Execute(InstructionSet) returns (Result) {}
+    rpc ServerStreamingExecute (InstructionSet) returns (stream Result){}
 }
 
 message Instruction {

@@ -189,11 +189,17 @@ var file_machine_machine_proto_rawDesc = []byte{
 	0x69, 0x6f, 0x6e, 0x52, 0x0c, 0x69, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e,
 	0x73, 0x22, 0x20, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f,
 	0x75, 0x74, 0x70, 0x75, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x6f, 0x75, 0x74,
-	0x70, 0x75, 0x74, 0x32, 0x40, 0x0a, 0x07, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x12, 0x35,
-	0x0a, 0x07, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x12, 0x17, 0x2e, 0x6d, 0x61, 0x63, 0x68,
-	0x69, 0x6e, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53,
-	0x65, 0x74, 0x1a, 0x0f, 0x2e, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x2e, 0x52, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x75, 0x74, 0x32, 0x88, 0x01, 0x0a, 0x07, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x12,
+	0x35, 0x0a, 0x07, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x12, 0x17, 0x2e, 0x6d, 0x61, 0x63,
+	0x68, 0x69, 0x6e, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x53, 0x65, 0x74, 0x1a, 0x0f, 0x2e, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x2e, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x22, 0x00, 0x12, 0x46, 0x0a, 0x16, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72,
+	0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x69, 0x6e, 0x67, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65,
+	0x12, 0x17, 0x2e, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72,
+	0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x74, 0x1a, 0x0f, 0x2e, 0x6d, 0x61, 0x63, 0x68,
+	0x69, 0x6e, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x00, 0x30, 0x01, 0x42, 0x09,
+	0x5a, 0x07, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -217,9 +223,11 @@ var file_machine_machine_proto_goTypes = []interface{}{
 var file_machine_machine_proto_depIdxs = []int32{
 	0, // 0: machine.InstructionSet.instructions:type_name -> machine.Instruction
 	1, // 1: machine.Machine.Execute:input_type -> machine.InstructionSet
-	2, // 2: machine.Machine.Execute:output_type -> machine.Result
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	1, // 2: machine.Machine.ServerStreamingExecute:input_type -> machine.InstructionSet
+	2, // 3: machine.Machine.Execute:output_type -> machine.Result
+	2, // 4: machine.Machine.ServerStreamingExecute:output_type -> machine.Result
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -301,6 +309,7 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MachineClient interface {
 	Execute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (*Result, error)
+	ServerStreamingExecute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (Machine_ServerStreamingExecuteClient, error)
 }
 
 type machineClient struct {
@@ -320,9 +329,42 @@ func (c *machineClient) Execute(ctx context.Context, in *InstructionSet, opts ..
 	return out, nil
 }
 
+func (c *machineClient) ServerStreamingExecute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (Machine_ServerStreamingExecuteClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Machine_serviceDesc.Streams[0], "/machine.Machine/ServerStreamingExecute", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &machineServerStreamingExecuteClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Machine_ServerStreamingExecuteClient interface {
+	Recv() (*Result, error)
+	grpc.ClientStream
+}
+
+type machineServerStreamingExecuteClient struct {
+	grpc.ClientStream
+}
+
+func (x *machineServerStreamingExecuteClient) Recv() (*Result, error) {
+	m := new(Result)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // MachineServer is the server API for Machine service.
 type MachineServer interface {
 	Execute(context.Context, *InstructionSet) (*Result, error)
+	ServerStreamingExecute(*InstructionSet, Machine_ServerStreamingExecuteServer) error
 }
 
 // UnimplementedMachineServer can be embedded to have forward compatible implementations.
@@ -331,6 +373,9 @@ type UnimplementedMachineServer struct {
 
 func (*UnimplementedMachineServer) Execute(context.Context, *InstructionSet) (*Result, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Execute not implemented")
+}
+func (*UnimplementedMachineServer) ServerStreamingExecute(*InstructionSet, Machine_ServerStreamingExecuteServer) error {
+	return status.Errorf(codes.Unimplemented, "method ServerStreamingExecute not implemented")
 }
 
 func RegisterMachineServer(s *grpc.Server, srv MachineServer) {
@@ -355,6 +400,27 @@ func _Machine_Execute_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Machine_ServerStreamingExecute_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(InstructionSet)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(MachineServer).ServerStreamingExecute(m, &machineServerStreamingExecuteServer{stream})
+}
+
+type Machine_ServerStreamingExecuteServer interface {
+	Send(*Result) error
+	grpc.ServerStream
+}
+
+type machineServerStreamingExecuteServer struct {
+	grpc.ServerStream
+}
+
+func (x *machineServerStreamingExecuteServer) Send(m *Result) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 var _Machine_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "machine.Machine",
 	HandlerType: (*MachineServer)(nil),
@@ -364,6 +430,12 @@ var _Machine_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Machine_Execute_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ServerStreamingExecute",
+			Handler:       _Machine_ServerStreamingExecute_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "machine/machine.proto",
 }
