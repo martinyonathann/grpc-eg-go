@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/martinyonathann/grpc-eg-go/machine"
+	"google.golang.org/grpc"
 )
 
 var (
@@ -22,4 +23,24 @@ func runExecute(client machine.MachineClient, instructions *machine.InstructionS
 		log.Fatalf("%v.Execute(_) = _, %v: ", client, err)
 	}
 	log.Println(result)
+}
+
+func main() {
+	flag.Parse()
+	var opts []grpc.DialOption
+	opts = append(opts, grpc.WithInsecure())
+	opts = append(opts, grpc.WithBlock())
+	conn, err := grpc.Dial(*serverAddr, opts...)
+	if err != nil {
+		log.Fatalf("fail to dail: %v", err)
+	}
+	defer conn.Close()
+	client := machine.NewMachineClient(conn)
+
+	// try Execute()
+	instructions := []*machine.Instruction{}
+	instructions = append(instructions, &machine.Instruction{Operand: 5, Operator: "PUSH"})
+	instructions = append(instructions, &machine.Instruction{Operand: 6, Operator: "PUSH"})
+	instructions = append(instructions, &machine.Instruction{Operator: "MUL"})
+	runExecute(client, &machine.InstructionSet{Instructions: instructions})
 }
