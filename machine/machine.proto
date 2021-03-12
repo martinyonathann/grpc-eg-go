@@ -12,7 +12,11 @@ option go_package = "machine";
 
 service Machine {
     rpc Execute(InstructionSet) returns (Result) {}
+<<<<<<< HEAD
 >>>>>>> 61858383af3c9893303e6c1d8c303613ddff9832
+=======
+    rpc ServerStreamingExecute (InstructionSet) returns (stream Result){}
+>>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
 }
 
 message Instruction {
