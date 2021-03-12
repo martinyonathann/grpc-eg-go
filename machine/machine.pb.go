@@ -215,6 +215,7 @@ var file_machine_machine_proto_rawDesc = []byte{
 	0x73, 0x22, 0x20, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f,
 	0x75, 0x74, 0x70, 0x75, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x6f, 0x75, 0x74,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	0x70, 0x75, 0x74, 0x32, 0x40, 0x0a, 0x07, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x12, 0x35,
 	0x0a, 0x07, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x12, 0x17, 0x2e, 0x6d, 0x61, 0x63, 0x68,
 	0x69, 0x6e, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53,
@@ -222,6 +223,8 @@ var file_machine_machine_proto_rawDesc = []byte{
 	0x75, 0x6c, 0x74, 0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 >>>>>>> 61858383af3c9893303e6c1d8c303613ddff9832
 =======
+=======
+>>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
 	0x70, 0x75, 0x74, 0x32, 0x88, 0x01, 0x0a, 0x07, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x12,
 	0x35, 0x0a, 0x07, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x12, 0x17, 0x2e, 0x6d, 0x61, 0x63,
 	0x68, 0x69, 0x6e, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e,
@@ -233,6 +236,9 @@ var file_machine_machine_proto_rawDesc = []byte{
 	0x69, 0x6e, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x00, 0x30, 0x01, 0x42, 0x09,
 	0x5a, 0x07, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x33,
+<<<<<<< HEAD
+>>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
+=======
 >>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
 }
 
@@ -370,7 +376,11 @@ type MachineClient interface {
 =======
 	Execute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (*Result, error)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 61858383af3c9893303e6c1d8c303613ddff9832
+=======
+	ServerStreamingExecute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (Machine_ServerStreamingExecuteClient, error)
+>>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
 =======
 	ServerStreamingExecute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (Machine_ServerStreamingExecuteClient, error)
 >>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
@@ -457,6 +467,38 @@ func (x *machineServerStreamingExecuteClient) Recv() (*Result, error) {
 	return m, nil
 }
 
+func (c *machineClient) ServerStreamingExecute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (Machine_ServerStreamingExecuteClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Machine_serviceDesc.Streams[0], "/machine.Machine/ServerStreamingExecute", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &machineServerStreamingExecuteClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Machine_ServerStreamingExecuteClient interface {
+	Recv() (*Result, error)
+	grpc.ClientStream
+}
+
+type machineServerStreamingExecuteClient struct {
+	grpc.ClientStream
+}
+
+func (x *machineServerStreamingExecuteClient) Recv() (*Result, error) {
+	m := new(Result)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // MachineServer is the server API for Machine service.
 type MachineServer interface {
 <<<<<<< HEAD
@@ -464,7 +506,11 @@ type MachineServer interface {
 =======
 	Execute(context.Context, *InstructionSet) (*Result, error)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 61858383af3c9893303e6c1d8c303613ddff9832
+=======
+	ServerStreamingExecute(*InstructionSet, Machine_ServerStreamingExecuteServer) error
+>>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
 =======
 	ServerStreamingExecute(*InstructionSet, Machine_ServerStreamingExecuteServer) error
 >>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
@@ -481,6 +527,9 @@ func (*UnimplementedMachineServer) Execute(Machine_ExecuteServer) error {
 func (*UnimplementedMachineServer) Execute(context.Context, *InstructionSet) (*Result, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Execute not implemented")
 >>>>>>> 61858383af3c9893303e6c1d8c303613ddff9832
+}
+func (*UnimplementedMachineServer) ServerStreamingExecute(*InstructionSet, Machine_ServerStreamingExecuteServer) error {
+	return status.Errorf(codes.Unimplemented, "method ServerStreamingExecute not implemented")
 }
 func (*UnimplementedMachineServer) ServerStreamingExecute(*InstructionSet, Machine_ServerStreamingExecuteServer) error {
 	return status.Errorf(codes.Unimplemented, "method ServerStreamingExecute not implemented")
@@ -556,6 +605,27 @@ func (x *machineServerStreamingExecuteServer) Send(m *Result) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _Machine_ServerStreamingExecute_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(InstructionSet)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(MachineServer).ServerStreamingExecute(m, &machineServerStreamingExecuteServer{stream})
+}
+
+type Machine_ServerStreamingExecuteServer interface {
+	Send(*Result) error
+	grpc.ServerStream
+}
+
+type machineServerStreamingExecuteServer struct {
+	grpc.ServerStream
+}
+
+func (x *machineServerStreamingExecuteServer) Send(m *Result) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 var _Machine_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "machine.Machine",
 	HandlerType: (*MachineServer)(nil),
@@ -577,9 +647,12 @@ var _Machine_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Streams:  []grpc.StreamDesc{},
 >>>>>>> 61858383af3c9893303e6c1d8c303613ddff9832
 =======
+=======
+>>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "ServerStreamingExecute",
@@ -587,6 +660,9 @@ var _Machine_serviceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
+<<<<<<< HEAD
+>>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
+=======
 >>>>>>> 8d333c00d097ffc8904d3b1d002226c513f4fc5c
 	Metadata: "machine/machine.proto",
 }
