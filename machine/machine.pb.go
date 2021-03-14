@@ -79,53 +79,6 @@ func (x *Instruction) GetOperand() int32 {
 	return 0
 }
 
-type InstructionSet struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Instructions []*Instruction `protobuf:"bytes,1,rep,name=instructions,proto3" json:"instructions,omitempty"`
-}
-
-func (x *InstructionSet) Reset() {
-	*x = InstructionSet{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_machine_machine_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *InstructionSet) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InstructionSet) ProtoMessage() {}
-
-func (x *InstructionSet) ProtoReflect() protoreflect.Message {
-	mi := &file_machine_machine_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InstructionSet.ProtoReflect.Descriptor instead.
-func (*InstructionSet) Descriptor() ([]byte, []int) {
-	return file_machine_machine_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *InstructionSet) GetInstructions() []*Instruction {
-	if x != nil {
-		return x.Instructions
-	}
-	return nil
-}
-
 type Result struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -137,7 +90,7 @@ type Result struct {
 func (x *Result) Reset() {
 	*x = Result{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_machine_machine_proto_msgTypes[2]
+		mi := &file_machine_machine_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -150,7 +103,7 @@ func (x *Result) String() string {
 func (*Result) ProtoMessage() {}
 
 func (x *Result) ProtoReflect() protoreflect.Message {
-	mi := &file_machine_machine_proto_msgTypes[2]
+	mi := &file_machine_machine_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -163,7 +116,7 @@ func (x *Result) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Result.ProtoReflect.Descriptor instead.
 func (*Result) Descriptor() ([]byte, []int) {
-	return file_machine_machine_proto_rawDescGZIP(), []int{2}
+	return file_machine_machine_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Result) GetOutput() float32 {
@@ -182,24 +135,14 @@ var file_machine_machine_proto_rawDesc = []byte{
 	0x1a, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x6f,
 	0x70, 0x65, 0x72, 0x61, 0x6e, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x6f, 0x70,
-	0x65, 0x72, 0x61, 0x6e, 0x64, 0x22, 0x4a, 0x0a, 0x0e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x74, 0x12, 0x38, 0x0a, 0x0c, 0x69, 0x6e, 0x73, 0x74, 0x72,
-	0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x14, 0x2e,
+	0x65, 0x72, 0x61, 0x6e, 0x64, 0x22, 0x20, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12,
+	0x16, 0x0a, 0x06, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52,
+	0x06, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x32, 0x41, 0x0a, 0x07, 0x4d, 0x61, 0x63, 0x68, 0x69,
+	0x6e, 0x65, 0x12, 0x36, 0x0a, 0x07, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x12, 0x14, 0x2e,
 	0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74,
-	0x69, 0x6f, 0x6e, 0x52, 0x0c, 0x69, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x22, 0x20, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f,
-	0x75, 0x74, 0x70, 0x75, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x6f, 0x75, 0x74,
-	0x70, 0x75, 0x74, 0x32, 0x88, 0x01, 0x0a, 0x07, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x12,
-	0x35, 0x0a, 0x07, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x12, 0x17, 0x2e, 0x6d, 0x61, 0x63,
-	0x68, 0x69, 0x6e, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x53, 0x65, 0x74, 0x1a, 0x0f, 0x2e, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x2e, 0x52, 0x65,
-	0x73, 0x75, 0x6c, 0x74, 0x22, 0x00, 0x12, 0x46, 0x0a, 0x16, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72,
-	0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x69, 0x6e, 0x67, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65,
-	0x12, 0x17, 0x2e, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72,
-	0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x74, 0x1a, 0x0f, 0x2e, 0x6d, 0x61, 0x63, 0x68,
-	0x69, 0x6e, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x00, 0x30, 0x01, 0x42, 0x09,
-	0x5a, 0x07, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x69, 0x6f, 0x6e, 0x1a, 0x0f, 0x2e, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x2e, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x42, 0x09, 0x5a, 0x07, 0x6d, 0x61,
+	0x63, 0x68, 0x69, 0x6e, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -214,23 +157,19 @@ func file_machine_machine_proto_rawDescGZIP() []byte {
 	return file_machine_machine_proto_rawDescData
 }
 
-var file_machine_machine_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_machine_machine_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_machine_machine_proto_goTypes = []interface{}{
-	(*Instruction)(nil),    // 0: machine.Instruction
-	(*InstructionSet)(nil), // 1: machine.InstructionSet
-	(*Result)(nil),         // 2: machine.Result
+	(*Instruction)(nil), // 0: machine.Instruction
+	(*Result)(nil),      // 1: machine.Result
 }
 var file_machine_machine_proto_depIdxs = []int32{
-	0, // 0: machine.InstructionSet.instructions:type_name -> machine.Instruction
-	1, // 1: machine.Machine.Execute:input_type -> machine.InstructionSet
-	1, // 2: machine.Machine.ServerStreamingExecute:input_type -> machine.InstructionSet
-	2, // 3: machine.Machine.Execute:output_type -> machine.Result
-	2, // 4: machine.Machine.ServerStreamingExecute:output_type -> machine.Result
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 0: machine.Machine.Execute:input_type -> machine.Instruction
+	1, // 1: machine.Machine.Execute:output_type -> machine.Result
+	1, // [1:2] is the sub-list for method output_type
+	0, // [0:1] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_machine_machine_proto_init() }
@@ -252,18 +191,6 @@ func file_machine_machine_proto_init() {
 			}
 		}
 		file_machine_machine_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*InstructionSet); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_machine_machine_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Result); i {
 			case 0:
 				return &v.state
@@ -282,7 +209,7 @@ func file_machine_machine_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_machine_machine_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -308,8 +235,9 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MachineClient interface {
-	Execute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (*Result, error)
-	ServerStreamingExecute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (Machine_ServerStreamingExecuteClient, error)
+	// rpc Execute(InstructionSet) returns (Result) {}
+	// rpc ServerStreamingExecute (InstructionSet) returns (stream Result){}
+	Execute(ctx context.Context, opts ...grpc.CallOption) (Machine_ExecuteClient, error)
 }
 
 type machineClient struct {
@@ -320,40 +248,30 @@ func NewMachineClient(cc grpc.ClientConnInterface) MachineClient {
 	return &machineClient{cc}
 }
 
-func (c *machineClient) Execute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (*Result, error) {
-	out := new(Result)
-	err := c.cc.Invoke(ctx, "/machine.Machine/Execute", in, out, opts...)
+func (c *machineClient) Execute(ctx context.Context, opts ...grpc.CallOption) (Machine_ExecuteClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Machine_serviceDesc.Streams[0], "/machine.Machine/Execute", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
-}
-
-func (c *machineClient) ServerStreamingExecute(ctx context.Context, in *InstructionSet, opts ...grpc.CallOption) (Machine_ServerStreamingExecuteClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Machine_serviceDesc.Streams[0], "/machine.Machine/ServerStreamingExecute", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &machineServerStreamingExecuteClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
+	x := &machineExecuteClient{stream}
 	return x, nil
 }
 
-type Machine_ServerStreamingExecuteClient interface {
+type Machine_ExecuteClient interface {
+	Send(*Instruction) error
 	Recv() (*Result, error)
 	grpc.ClientStream
 }
 
-type machineServerStreamingExecuteClient struct {
+type machineExecuteClient struct {
 	grpc.ClientStream
 }
 
-func (x *machineServerStreamingExecuteClient) Recv() (*Result, error) {
+func (x *machineExecuteClient) Send(m *Instruction) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *machineExecuteClient) Recv() (*Result, error) {
 	m := new(Result)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -363,78 +281,59 @@ func (x *machineServerStreamingExecuteClient) Recv() (*Result, error) {
 
 // MachineServer is the server API for Machine service.
 type MachineServer interface {
-	Execute(context.Context, *InstructionSet) (*Result, error)
-	ServerStreamingExecute(*InstructionSet, Machine_ServerStreamingExecuteServer) error
+	// rpc Execute(InstructionSet) returns (Result) {}
+	// rpc ServerStreamingExecute (InstructionSet) returns (stream Result){}
+	Execute(Machine_ExecuteServer) error
 }
 
 // UnimplementedMachineServer can be embedded to have forward compatible implementations.
 type UnimplementedMachineServer struct {
 }
 
-func (*UnimplementedMachineServer) Execute(context.Context, *InstructionSet) (*Result, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Execute not implemented")
-}
-func (*UnimplementedMachineServer) ServerStreamingExecute(*InstructionSet, Machine_ServerStreamingExecuteServer) error {
-	return status.Errorf(codes.Unimplemented, "method ServerStreamingExecute not implemented")
+func (*UnimplementedMachineServer) Execute(Machine_ExecuteServer) error {
+	return status.Errorf(codes.Unimplemented, "method Execute not implemented")
 }
 
 func RegisterMachineServer(s *grpc.Server, srv MachineServer) {
 	s.RegisterService(&_Machine_serviceDesc, srv)
 }
 
-func _Machine_Execute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InstructionSet)
-	if err := dec(in); err != nil {
+func _Machine_Execute_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(MachineServer).Execute(&machineExecuteServer{stream})
+}
+
+type Machine_ExecuteServer interface {
+	Send(*Result) error
+	Recv() (*Instruction, error)
+	grpc.ServerStream
+}
+
+type machineExecuteServer struct {
+	grpc.ServerStream
+}
+
+func (x *machineExecuteServer) Send(m *Result) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *machineExecuteServer) Recv() (*Instruction, error) {
+	m := new(Instruction)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(MachineServer).Execute(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/machine.Machine/Execute",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MachineServer).Execute(ctx, req.(*InstructionSet))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Machine_ServerStreamingExecute_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(InstructionSet)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(MachineServer).ServerStreamingExecute(m, &machineServerStreamingExecuteServer{stream})
-}
-
-type Machine_ServerStreamingExecuteServer interface {
-	Send(*Result) error
-	grpc.ServerStream
-}
-
-type machineServerStreamingExecuteServer struct {
-	grpc.ServerStream
-}
-
-func (x *machineServerStreamingExecuteServer) Send(m *Result) error {
-	return x.ServerStream.SendMsg(m)
+	return m, nil
 }
 
 var _Machine_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "machine.Machine",
 	HandlerType: (*MachineServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Execute",
-			Handler:    _Machine_Execute_Handler,
-		},
-	},
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "ServerStreamingExecute",
-			Handler:       _Machine_ServerStreamingExecute_Handler,
+			StreamName:    "Execute",
+			Handler:       _Machine_Execute_Handler,
 			ServerStreams: true,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "machine/machine.proto",

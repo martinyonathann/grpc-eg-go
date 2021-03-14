@@ -5,8 +5,9 @@ option go_package = "machine";
 
 
 service Machine {
-    rpc Execute(InstructionSet) returns (Result) {}
-    rpc ServerStreamingExecute (InstructionSet) returns (stream Result){}
+    // rpc Execute(InstructionSet) returns (Result) {}
+    // rpc ServerStreamingExecute (InstructionSet) returns (stream Result){}
+    rpc Execute(stream Instruction) returns (stream Result){}
 }
 
 message Instruction {
@@ -14,9 +15,9 @@ message Instruction {
     int32 operand = 2;
 }
 
-message InstructionSet {
-    repeated Instruction instructions = 1;
-}
+// message InstructionSet {
+//     repeated Instruction instructions = 1;
+// }
 
 message Result {
     float output = 1;
