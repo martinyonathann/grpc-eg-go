@@ -30,11 +30,10 @@ func (s *MachineServer) Execute(stream machine.Machine_ExecuteServer) error {
 	var stack stack.Stack
 	for {
 		instruction, err := stream.Recv()
-		if err != io.EOF {
+		if err == io.EOF {
 			log.Println("EOF")
 			return nil
 		}
-
 		if err != nil {
 			return err
 		}
@@ -43,7 +42,7 @@ func (s *MachineServer) Execute(stream machine.Machine_ExecuteServer) error {
 		operator := instruction.GetOperator()
 		op_type := OperatorType(operator)
 
-		fmt.Printf("Operand: %v, Operator: %v", operand, operator)
+		fmt.Printf("Operand: %v, Operator: %v\n", operand, operator)
 
 		switch op_type {
 		case PUSH:
@@ -61,13 +60,15 @@ func (s *MachineServer) Execute(stream machine.Machine_ExecuteServer) error {
 			var res float32
 			if op_type == ADD {
 				res = item1 + item2
+			} else if op_type == SUB {
+				res = item1 - item2
 			} else if op_type == MUL {
 				res = item1 * item2
 			} else if op_type == DIV {
 				res = item1 / item2
 			}
-			stack.Push(res)
 
+			stack.Push(res)
 			if err := stream.Send(&machine.Result{Output: float32(res)}); err != nil {
 				return err
 			}
@@ -77,6 +78,7 @@ func (s *MachineServer) Execute(stream machine.Machine_ExecuteServer) error {
 			if !popped {
 				return status.Error(codes.Aborted, "Invalid sets of instructions. Execution aborted")
 			}
+
 			if op_type == FIB {
 				for f := range utils.FibonacciRange(int(n)) {
 					if err := stream.Send(&machine.Result{Output: float32(f)}); err != nil {
@@ -88,5 +90,4 @@ func (s *MachineServer) Execute(stream machine.Machine_ExecuteServer) error {
 			return status.Errorf(codes.Unimplemented, "Operation '%s' not implemented yet", operator)
 		}
 	}
-
 }

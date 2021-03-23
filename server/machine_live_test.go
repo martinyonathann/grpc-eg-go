@@ -1,21 +1,38 @@
-package main
+package server
 
 import (
 	"context"
-	"flag"
 	"io"
 	"log"
+	"net"
+	"testing"
 	"time"
 
 	"github.com/martinyonathann/grpc-eg-go/machine"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/test/bufconn"
 )
 
-var (
-	serverAddr = flag.String("server_addr", "localhost:9111", "The server address in the format of host:port")
-)
+const bufSize = 1024 * 1024
 
-func runExecute(client machine.MachineClient, instructions []*machine.Instruction) {
+var lis *bufconn.Listener
+
+func init() {
+	lis = bufconn.Listen(bufSize)
+	s := grpc.NewServer()
+	machine.RegisterMachineServer(s, &MachineServer{})
+	go func() {
+		if err := s.Serve(lis); err != nil {
+			log.Fatalf("Server exited with error: %v", err)
+		}
+	}()
+}
+
+func bufDialer(context.Context, string) (net.Conn, error) {
+	return lis.Dial()
+}
+
+func testExecute_Live(t *testing.T, client machine.MachineClient, instructions []*machine.Instruction, wants []float32) {
 	log.Printf("Streaming %v", instructions)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -25,6 +42,7 @@ func runExecute(client machine.MachineClient, instructions []*machine.Instructio
 	}
 	waitc := make(chan struct{})
 	go func() {
+		i := 0
 		for {
 			result, err := stream.Recv()
 			if err == io.EOF {
@@ -36,6 +54,12 @@ func runExecute(client machine.MachineClient, instructions []*machine.Instructio
 				log.Printf("Err: %v", err)
 			}
 			log.Printf("output: %v", result.GetOutput())
+			got := result.GetOutput()
+			want := wants[i]
+			if got != want {
+				t.Errorf("got %v, want %v", got, want)
+			}
+			i++
 		}
 	}()
 
@@ -43,21 +67,18 @@ func runExecute(client machine.MachineClient, instructions []*machine.Instructio
 		if err := stream.Send(instruction); err != nil {
 			log.Fatalf("%v.Send(%v) = %v: ", stream, instruction, err)
 		}
-		time.Sleep(500 * time.Millisecond)
 	}
 	if err := stream.CloseSend(); err != nil {
 		log.Fatalf("%v.CloseSend() got error %v, want %v", stream, err, nil)
 	}
 	<-waitc
 }
-func main() {
-	flag.Parse()
-	var opts []grpc.DialOption
-	opts = append(opts, grpc.WithInsecure())
-	opts = append(opts, grpc.WithBlock())
-	conn, err := grpc.Dial(*serverAddr, opts...)
+
+func TestExecute_Live(t *testing.T) {
+	ctx := context.Background()
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("fail to dail: %v", err)
+		t.Fatalf("Failed to dial bufnet: %v", err)
 	}
 	defer conn.Close()
 	client := machine.NewMachineClient(conn)
@@ -76,5 +97,6 @@ func main() {
 		{Operand: 6, Operator: "PUSH"},
 		{Operator: "SUB"},
 	}
-	runExecute(client, instructions)
+	wants := []float32{3, 1, 4, 0, 1, 1, 2, 3, -1}
+	testExecute_Live(t, client, instructions, wants)
 }
